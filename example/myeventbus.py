@@ -1,13 +1,16 @@
 __author__ = 'Xsank'
 from eventbus.eventbus import EventBus
 
-from myevent import MyEvent
+from myevent import GreetEvent
+from myevent import ByeEvent
 from mylistener import MyListener
 
 
 if __name__=="__main__":
     eventbus=EventBus()
     eventbus.register(MyListener())
-    me=MyEvent('world')
-    eventbus.post(me)
+    ge=GreetEvent('world')
+    be=ByeEvent('world')
+    eventbus.post(ge)
+    eventbus.post(be)
     eventbus.unregister(MyListener())
