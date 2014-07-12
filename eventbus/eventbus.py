@@ -1,5 +1,6 @@
 __author__ = 'Xsank'
 import inspect
+from multiprocessing.pool import ThreadPool
 
 from listener import Listener
 from exception import RegisterError
@@ -7,8 +8,9 @@ from exception import UnregisterError
 
 
 class EventBus(object):
-    def __init__(self):
+    def __init__(self,pool_size=4):
         self.listeners=dict()
+        self.pool=ThreadPool(pool_size)
 
     def register(self,listener):
         if not isinstance(listener,Listener):
@@ -26,5 +28,9 @@ class EventBus(object):
             for name,func in inspect.getmembers(listener,predicate=inspect.ismethod):
                 func(event)
 
+    def async_post(self,event):
+        self.pool.map(self.post,(event,))
+
     def destroy(self):
         self.listeners.clear()
+        self.pool.close()
