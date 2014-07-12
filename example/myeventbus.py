@@ -12,5 +12,5 @@ if __name__=="__main__":
     ge=GreetEvent('world')
     be=ByeEvent('world')
     eventbus.post(ge)
-    eventbus.post(be)
+    eventbus.async_post(be)
     eventbus.unregister(MyListener())
