@@ -49,7 +49,9 @@ Example
 Information
 -----------
 1.Your event must inherit from the Event
+
 2.Your listener must inherit from the Listener
+
 3.When you write your own listeners,You would better note the event message type so the eventbus will use the right handler to process it.
     
 You can see the complete example in the example directory.
