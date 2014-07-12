@@ -21,30 +21,30 @@ python setup.py install
 Example
 -------
 
-... code-block:: python
+.. code-block:: python
 
     from eventbus.eventbus import EventBus
-	#now create a eventbus,the default pool size is 4
-	eventbus=EventBus()
-	
-	
-	#add the listener to eventbus so it will use the right handler to process the event
-	eventbus.register(Listener())
-	
-	
-	#now the event message were sent,eventbus will process
-	eventbus.async_post(GreetEvent())
-	
-	
-	#remove the listener
-	eventbus.unregister(Listener())
-	
-	
+    #now create a eventbus,the default pool size is 4
+    eventbus=EventBus()
+    
+    
+    #add the listener to eventbus so it will use the right handler to process the event
+    eventbus.register(Listener())
+    
+    
+    #now the event message were sent,eventbus will process
+    eventbus.async_post(GreetEvent())
+    
+    
+    #remove the listener
+    eventbus.unregister(Listener())
+    
+    
 
 Information
 -----------
 1.Your event must inherit from the Event
 2.Your listener must inherit from the Listener
 3.When you write your own listeners,You would better note the event message type so the eventbus will use the right handler to process it.
-	
+    
 You can see the complete example in the example directory.
