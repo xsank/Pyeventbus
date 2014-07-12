@@ -21,7 +21,7 @@ python setup.py install
 Example
 -------
 
-.. code-block:: python
+... code-block:: python
 
 
     from eventbus.eventbus import EventBus
