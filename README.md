@@ -13,7 +13,7 @@ Installation and Dependencies
 
 Install Pyeventbus 
 
-git clone https://github.com/xsank/Pyeventbus
+git clone https://github.com/xsank/Pyeventbus.git
 
 python setup.py install
 
@@ -27,15 +27,20 @@ Example
     #now create a eventbus,the default pool size is 4
     eventbus=EventBus()
     
-    
+.. code-block:: python
+
     #add the listener to eventbus so it will use the right handler to process the event
     eventbus.register(Listener())
     
     
+.. code-block:: python
+
     #now the event message were sent,eventbus will process
     eventbus.async_post(GreetEvent())
     
     
+.. code-block:: python
+
     #remove the listener
     eventbus.unregister(Listener())
     
