@@ -23,7 +23,6 @@ Example
 
 .. code-block:: python
 
-
     from eventbus.eventbus import EventBus
 	#now create a eventbus,the default pool size is 4
 	eventbus=EventBus()
