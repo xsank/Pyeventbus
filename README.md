@@ -24,13 +24,15 @@ Example
 .. code-block:: python
 
     from eventbus.eventbus import EventBus
-    #now create a eventbus,the default pool size is 4
+    #now create a eventbus,the default pool size is 4 and isdaemon is true
     eventbus=EventBus()
     
 .. code-block:: python
 
     #add the listener to eventbus so it will use the right handler to process the event
     eventbus.register(Listener())
+    #after that,you should start the event bus,now it works
+    eventbus.start()
     
     
 .. code-block:: python
