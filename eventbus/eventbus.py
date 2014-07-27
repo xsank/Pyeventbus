@@ -5,11 +5,14 @@ from threading import Condition
 from threading import Thread
 
 from listener import Listener
+from util import Singleton
 from exception import RegisterError
 from exception import UnregisterError
 
 
 class EventBus(Thread):
+    __metaclass__=Singleton
+
     def __init__(self,pool_size=4,is_daemon=True):
         super(EventBus,self).__init__()
         self.setDaemon(is_daemon)

@@ -20,3 +20,7 @@ class UnregisterError(Exception):
 
     def __str__(self):
         return self.__doc__
+
+
+class InstanceException(Exception):
+    '''The class can only be instantiated once!'''
