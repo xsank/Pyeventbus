@@ -1,5 +1,6 @@
 __author__ = 'Xsank'
 import inspect
+import thread
 from multiprocessing.pool import ThreadPool
 from threading import Condition
 from threading import Thread
@@ -10,18 +11,21 @@ from exception import RegisterError
 from exception import UnregisterError
 
 
-class EventBus(Thread):
+class EventBus(object):
     __metaclass__=Singleton
 
-    def __init__(self,pool_size=4,is_daemon=True):
+    def __init__(self,pool_size=4):
         super(EventBus,self).__init__()
-        self.setDaemon(is_daemon)
         self.listeners=dict()
         self.pool=ThreadPool(pool_size)
         self.events=list()
         self.con=Condition()
+        self.init()
 
-    def run(self):
+    def init(self):
+        thread.start_new_thread(self.loop,())
+
+    def loop(self):
         while True:
             self.con.acquire()
             while not self.events:
