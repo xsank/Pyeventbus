@@ -1,22 +1,10 @@
-.. Pyeventbus documentation master file, created by
-   sphinx-quickstart on Mon Jul 28 13:32:04 2014.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Welcome to Pyeventbus's documentation!
-======================================
-
-Contents:
-
-.. toctree::
-   :maxdepth: 2
+Pyeventbus
+====================
 
 
+Pyeventbus is designed to process the traditional event more easilly.You need only write your event message and your
+listeners and post the event at the right time. The event message will be process well.The Pyeventbus support simple 
+synchronous and asynchronous event handling.
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+License: MIT (see LICENSE)
 
