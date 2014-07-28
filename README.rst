@@ -36,6 +36,10 @@ Example
 .. code-block:: python
 
     #now the event message were sent,eventbus will process
+    #this is for the async post
+    eventbus.async_post(GreetEvent())
+
+    #this is for the sync post
     eventbus.async_post(GreetEvent())
     
     
@@ -43,6 +47,12 @@ Example
 
     #remove the listener
     eventbus.unregister(Listener())
+
+
+.. code-block:: python
+
+    #destroy the eventbus
+    eventbus.destroy()
     
     
 
