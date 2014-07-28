@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Pyeventbus : This is for making your project process event easilly." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Pyeventbus</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/xsank/Pyeventbus">View on GitHub</a>
+
+          <h1 id="project_title">Pyeventbus</h1>
+          <h2 id="project_tagline">This is for making your project process event easilly.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/xsank/Pyeventbus/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/xsank/Pyeventbus/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="pyeventbus" class="anchor" href="#pyeventbus"><span class="octicon octicon-link"></span></a>Pyeventbus</h1>
+
+<p>Pyeventbus is designed to process the traditional event more easilly.You need only write your event message and your
+listeners and post the event at the right time. The event message will be process well.The Pyeventbus support simple 
+synchronous and asynchronous event handling.</p>
+
+<p>License: MIT (see LICENSE)</p>
+
+<h2>
+<a name="installation-and-dependencies" class="anchor" href="#installation-and-dependencies"><span class="octicon octicon-link"></span></a>Installation and Dependencies</h2>
+
+<p>Install Pyeventbus </p>
+
+<p>git clone <a href="https://github.com/xsank/Pyeventbus.git">https://github.com/xsank/Pyeventbus.git</a></p>
+
+<p>python setup.py install</p>
+
+<h2>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h2>
+
+<p>.. code-block:: python</p>
+
+<pre><code>from eventbus.eventbus import EventBus
+#now create a eventbus,the default pool size is 4 and isdaemon is true
+eventbus=EventBus()
+</code></pre>
+
+<p>.. code-block:: python</p>
+
+<pre><code>#add the listener to eventbus so it will use the right handler to process the event
+eventbus.register(Listener())
+</code></pre>
+
+<p>.. code-block:: python</p>
+
+<pre><code>#now the event message were sent,eventbus will process
+#this is for the async post
+eventbus.async_post(GreetEvent())
+
+#this is for the sync post
+eventbus.post(GreetEvent())
+</code></pre>
+
+<p>.. code-block:: python</p>
+
+<pre><code>#remove the listener
+eventbus.unregister(Listener())
+</code></pre>
+
+<p>.. code-block:: python</p>
+
+<pre><code>#destroy the eventbus
+eventbus.destroy()
+</code></pre>
+
+<h2>
+<a name="information" class="anchor" href="#information"><span class="octicon octicon-link"></span></a>Information</h2>
+
+<p>1.Your event must inherit from the Event</p>
+
+<p>2.Your listener must inherit from the Listener</p>
+
+<p>3.When you write your own listeners,You would better note the event message type so the eventbus will use the right handler to process it.</p>
+
+<p>You can see the complete example in the example directory.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Pyeventbus maintained by <a href="https://github.com/xsank">xsank</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
