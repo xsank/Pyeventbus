@@ -31,8 +31,6 @@ Example
 
     #add the listener to eventbus so it will use the right handler to process the event
     eventbus.register(Listener())
-    #after that,you should start the event bus,now it works
-    eventbus.start()
     
     
 .. code-block:: python
