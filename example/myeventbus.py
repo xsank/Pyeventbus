@@ -16,3 +16,4 @@ if __name__=="__main__":
     eventbus.post(ge)
     time.sleep(0.1)
     eventbus.unregister(MyListener())
+    eventbus.destroy()
