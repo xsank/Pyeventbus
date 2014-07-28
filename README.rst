@@ -40,7 +40,7 @@ Example
     eventbus.async_post(GreetEvent())
 
     #this is for the sync post
-    eventbus.async_post(GreetEvent())
+    eventbus.post(GreetEvent())
     
     
 .. code-block:: python
