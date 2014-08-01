@@ -1,5 +1,4 @@
 __author__ = 'Xsank'
-import inspect
 import thread
 from multiprocessing.pool import ThreadPool
 from threading import Condition
@@ -8,9 +7,21 @@ from event import Event
 from listener import Listener
 from util import Singleton
 from exception import EventTypeError
-from exception import RegisterError
+from exception import ListenerTypeError
 from exception import UnregisterError
 from exception import ProcessException
+
+
+def check_type(valid_type,exception):
+    def decorator(func):
+        def _decorator(obj,event):
+            if isinstance(event,valid_type):
+                func(obj,event)
+            else:
+                raise exception
+            return _decorator
+        return func
+    return decorator
 
 
 class EventBus(object):
@@ -27,20 +38,15 @@ class EventBus(object):
     def init(self):
         thread.start_new_thread(self.loop,())
 
+    @check_type(Listener,ListenerTypeError)
     def register(self,listener):
-        if not isinstance(listener,Listener):
-            raise RegisterError
+        self.event_handlers.update(listener.event_handlers)
 
-        for name,func in EventBus.get_listener_handlers(listener):
-            if func.event in self.event_handlers:
-                self.event_handlers[func.event].append(func)
-            else:
-                self.event_handlers[func.event]=[func]
-
+    @check_type(Listener,ListenerTypeError)
     def unregister(self,listener):
         try:
-            for name,func in EventBus.get_listener_handlers(listener):
-                del self.event_handlers[func.event]
+            for event in listener.event_handlers:
+                del self.event_handlers[event]
         except Exception:
             raise UnregisterError
 
@@ -52,11 +58,13 @@ class EventBus(object):
         for handler in handlers:
             handler(event)
 
+    @check_type(Event,EventTypeError)
     def post(self,event):
         if not isinstance(event,Event):
             raise EventTypeError
         self.process(event)
 
+    @check_type(Event,EventTypeError)
     def async_post(self,event):
         self.con.acquire()
         self.async_events.append(event)
@@ -71,10 +79,6 @@ class EventBus(object):
             self.pool.map(self.process,self.async_events)
             self.async_events=list()
             self.con.release()
-
-    @staticmethod
-    def get_listener_handlers(listener):
-        return inspect.getmembers(listener,predicate=inspect.ismethod)
 
     def destroy(self):
         self.event_handlers.clear()

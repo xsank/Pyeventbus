@@ -2,6 +2,7 @@ __author__ = 'Xsank'
 
 
 class EventbusException():
+    '''This is the base exception of the Eventbus.'''
     def __str__(self):
         return self.__doc__
 
@@ -10,8 +11,8 @@ class EventTypeError(EventbusException):
     '''Event type is invalid!'''
 
 
-class RegisterError(EventbusException):
-    '''Unknow listener to register!'''
+class ListenerTypeError(EventbusException):
+    '''Listener type is invalid!'''
 
 
 class UnregisterError(EventbusException):
@@ -19,7 +20,7 @@ class UnregisterError(EventbusException):
 
 
 class ProcessException(EventbusException):
-    '''Post message but no listener related regist'''
+    '''Post message but no listener related register!'''
 
 
 class InstanceException(EventbusException):

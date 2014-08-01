@@ -11,6 +11,10 @@ class MyListener(Listener):
     def greet(self,event=None):
         print 'hello',event.name
 
+    @add_event(GreetEvent)
+    def greet2(self,event=None):
+        print 'hi',event.name
+
     @add_event(ByeEvent)
     def goodbye(self,event=None):
         print 'bye',event.name
