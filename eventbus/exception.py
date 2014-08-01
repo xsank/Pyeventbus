@@ -1,26 +1,26 @@
 __author__ = 'Xsank'
 
 
-class EventTypeError(Exception):
+class EventbusException():
+    def __str__(self):
+        return self.__doc__
+
+
+class EventTypeError(EventbusException):
     '''Event type is invalid!'''
 
-    def __str__(self):
-        return self.__doc__
 
-
-class RegisterError(Exception):
+class RegisterError(EventbusException):
     '''Unknow listener to register!'''
 
-    def __str__(self):
-        return self.__doc__
 
-
-class UnregisterError(Exception):
+class UnregisterError(EventbusException):
     '''No listener to unregister!'''
 
-    def __str__(self):
-        return self.__doc__
+
+class ProcessException(EventbusException):
+    '''Post message but no listener related regist'''
 
 
-class InstanceException(Exception):
+class InstanceException(EventbusException):
     '''The class can only be instantiated once!'''
