@@ -14,13 +14,12 @@ from exception import ProcessException
 
 def check_type(valid_type,exception):
     def decorator(func):
-        def _decorator(obj,event):
-            if isinstance(event,valid_type):
-                func(obj,event)
+        def _decorator(obj,_type):
+            if isinstance(_type,valid_type):
+                func(obj,_type)
             else:
                 raise exception
-            return _decorator
-        return func
+        return _decorator
     return decorator
 
 
@@ -60,8 +59,6 @@ class EventBus(object):
 
     @check_type(Event,EventTypeError)
     def post(self,event):
-        if not isinstance(event,Event):
-            raise EventTypeError
         self.process(event)
 
     @check_type(Event,EventTypeError)
