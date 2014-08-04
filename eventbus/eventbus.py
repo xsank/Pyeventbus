@@ -50,7 +50,7 @@ class EventBus(object):
             raise UnregisterError
 
     def process(self,event):
-        handlers=self.event_handlers[event.__class__.__name__]
+        handlers=self.event_handlers[event.id()]
         if not handlers:
             raise ProcessException
 

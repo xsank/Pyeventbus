@@ -4,7 +4,7 @@ import inspect
 
 def add_event(valid_type):
     def decorate(func):
-        setattr(func,'event',valid_type.__name__)
+        setattr(func,'event',valid_type.id())
         return func
     return decorate
 
