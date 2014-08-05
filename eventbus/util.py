@@ -1,5 +1,4 @@
 __author__ = 'Xsank'
-from exception import InstanceException
 
 
 class Singleton(type):
