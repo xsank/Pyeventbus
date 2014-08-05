@@ -23,6 +23,10 @@ def check_type(valid_type,exception):
     return decorator
 
 
+check_event=check_type(Event,EventTypeError)
+check_listener=check_type(Listener,ListenerTypeError)
+
+
 class EventBus(object):
     __metaclass__=Singleton
 
@@ -37,11 +41,11 @@ class EventBus(object):
     def init(self):
         thread.start_new_thread(self.loop,())
 
-    @check_type(Listener,ListenerTypeError)
+    @check_listener
     def register(self,listener):
         self.event_handlers.update(listener.event_handlers)
 
-    @check_type(Listener,ListenerTypeError)
+    @check_listener
     def unregister(self,listener):
         try:
             for event in listener.event_handlers:
@@ -57,11 +61,11 @@ class EventBus(object):
         for handler in handlers:
             handler(event)
 
-    @check_type(Event,EventTypeError)
+    @check_event
     def post(self,event):
         self.process(event)
 
-    @check_type(Event,EventTypeError)
+    @check_event
     def async_post(self,event):
         self.con.acquire()
         self.async_events.append(event)
