@@ -43,10 +43,22 @@ class EventBus(object):
 
     @check_listener
     def register(self,listener):
+        '''
+        Use this method to register your listener to the eventbus
+        and please before you post.
+        :param listener: The listener have to be inheritanced from the Listener.
+        :return: None
+        '''
         self.event_handlers.update(listener.event_handlers)
 
     @check_listener
     def unregister(self,listener):
+        '''
+        This method will remove the listener from the eventbus so
+        that your listener will not process the event.
+        :param listener: The listener have to be inheritanced from the Listener.
+        :return: None
+        '''
         try:
             for event in listener.event_handlers:
                 del self.event_handlers[event]
@@ -63,10 +75,23 @@ class EventBus(object):
 
     @check_event
     def post(self,event):
+        '''
+        Post your event when you need. The listener you registed will process it.
+        And this is a sync method. It will not return until it complete.
+        :param event: The event have to be inheritanced from the Event.
+        :return: None
+        '''
         self.process(event)
 
     @check_event
     def async_post(self,event):
+        '''
+        Post your event when you need. The listener you registed will process it.
+        And this is a async method. You just post the event and it will not hold on
+        your main thread.
+        :param event: The event have to be inheritanced from the Event.
+        :return: None
+        '''
         self.con.acquire()
         self.async_events.append(event)
         self.con.notifyAll()
@@ -82,5 +107,10 @@ class EventBus(object):
             self.con.release()
 
     def destroy(self):
+        '''
+        If you don't want to use it anymore. Use this method to release the resource.
+        :param: None
+        :return: None
+        '''
         self.event_handlers.clear()
         self.pool.close()

@@ -11,7 +11,11 @@ def add_event(valid_type):
 
 
 class Listener(object):
-    '''This is the base class of all the listeners'''
+    '''
+    This is the base class of all the listeners.
+    Your listener have to be inheritanced from it. Otherwise the eventbus
+    will throw the ListenertypeError exception when you register it.
+    '''
     def __init__(self):
         self.event_handlers=defaultdict(list)
         self.init_event_handlers()
