@@ -92,19 +92,17 @@ class EventBus(object):
         :param event: The event have to be inheritanced from the Event.
         :return: None
         '''
-        self.con.acquire()
-        self.async_events.append(event)
-        self.con.notifyAll()
-        self.con.release()
+        with self.con:
+            self.async_events.append(event)
+            self.con.notifyAll()
 
     def loop(self):
         while True:
-            self.con.acquire()
-            while not self.async_events:
-                self.con.wait()
-            self.pool.map(self.process,self.async_events)
-            self.async_events=list()
-            self.con.release()
+            with self.con:
+                while not self.async_events:
+                    self.con.wait()
+                self.pool.map(self.process,self.async_events)
+                self.async_events=list()
 
     def destroy(self):
         '''
