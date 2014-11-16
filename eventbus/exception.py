@@ -25,3 +25,7 @@ class ProcessException(EventbusException):
 
 class InstanceException(EventbusException):
     '''The class can only be instantiated once!'''
+
+
+class TaskFullException(EventbusException):
+    '''Too many tasks to finished!'''
