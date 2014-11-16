@@ -4,12 +4,14 @@ from multiprocessing.pool import ThreadPool
 from threading import Condition
 
 from event import Event
+from taskpool import TaskPool
 from listener import Listener
 from util import Singleton
 from exception import EventTypeError
 from exception import ListenerTypeError
 from exception import UnregisterError
 from exception import ProcessException
+from exception import TaskFullException
 
 
 def check_type(valid_type,exception):
@@ -30,10 +32,10 @@ check_listener=check_type(Listener,ListenerTypeError)
 class EventBus(object):
     __metaclass__=Singleton
 
-    def __init__(self,pool_size=4):
+    def __init__(self,pool_size=4,task_size=100):
         super(EventBus,self).__init__()
         self.pool=ThreadPool(pool_size)
-        self.async_events=list()
+        self.async_events=TaskPool(task_size)
         self.event_handlers=dict()
         self.con=Condition()
         self.init()
@@ -93,16 +95,19 @@ class EventBus(object):
         :return: None
         '''
         with self.con:
-            self.async_events.append(event)
+            self.async_events.add_task(event)
             self.con.notifyAll()
 
     def loop(self):
         while True:
             with self.con:
-                while not self.async_events:
+                while self.async_events.isempty():
                     self.con.wait()
-                self.pool.map(self.process,self.async_events)
-                self.async_events=list()
+                if self.async_events.isfull():
+                    raise TaskFullException
+                else:
+                    self.pool.map(self.process,self.async_events.tasks)
+                    self.async_events.remove_task()
 
     def destroy(self):
         '''
@@ -112,3 +117,4 @@ class EventBus(object):
         '''
         self.event_handlers.clear()
         self.pool.close()
+        self.async_events.destroy()
